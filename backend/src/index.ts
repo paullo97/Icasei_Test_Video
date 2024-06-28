@@ -9,19 +9,7 @@ const app = express();
 const port = SECRETS.PORT;
 
 app.use(session(SESSION));
-
-// app.get('/', (req, res) => {
-//   if (req.session.views) {
-//     req.session.views++;
-//     res.send(`Você visitou esta página ${req.session.views} vezes.`);
-//   } else {
-//     req.session.views = 1;
-//     res.send('Bem-vindo à sua primeira visita!');
-//   }
-// });
 app.use(express.json());
-
-// Rotas
 app.use('/videos', videosRouter);
 app.use('/favorites', favoritesRouter);
 
