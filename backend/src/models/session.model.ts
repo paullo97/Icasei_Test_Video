@@ -1,9 +1,18 @@
-// src/models/session.model.ts
-
 import 'express-session';
 
 declare module 'express-session' {
   interface SessionData {
-    views: number;
+    favorites: string[];
   }
+}
+
+export interface SessionModel {
+  secret: string,
+  resave: boolean,
+  saveUninitialized: boolean,
+  cookie: CookieModel
+}
+
+interface CookieModel {
+  secure: boolean;
 }
