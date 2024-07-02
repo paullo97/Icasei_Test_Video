@@ -1,4 +1,3 @@
-// Define um componente personalizado como exemplo
 class MyComponent extends HTMLElement {
   constructor() {
     super();
@@ -28,7 +27,6 @@ class MyComponent extends HTMLElement {
   }
 }
 
-// Define a função que registra os componentes personalizados
 export function defineCustomElements() {
   customElements.define('my-component', MyComponent);
 }

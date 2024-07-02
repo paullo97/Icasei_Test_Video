@@ -1,7 +1,5 @@
-// src/components/drawer.ts
-
 import { CardComponent } from './card';
-import { SearchInput } from './inputSearch'; // Importe o SearchInput
+import { SearchInput } from './inputSearch';
 
 export class ContentMain extends HTMLElement {
     constructor() {
@@ -13,16 +11,23 @@ export class ContentMain extends HTMLElement {
         wrapper.setAttribute('class', 'wrapper');
 
         const content = document.createElement('span');
-        content.textContent = 'MF_VIDEOS';
+        content.textContent = this.getAttribute('text') || 'MF_VIDEOS';
         wrapper.appendChild(content);
 
-        const searchInput = new SearchInput();
-        wrapper.appendChild(searchInput);
+        if (this.hasAttribute('showSearchInput') && this.getAttribute('showSearchInput') !== 'false') {
+            const searchInput = new SearchInput();
+            wrapper.appendChild(searchInput);
+
+            searchInput.addEventListener('keydown', (event: KeyboardEvent) => {
+                if (event.key === 'Enter') {
+                    console.log('Enter pressionado! Valor digitado:', searchInput.value);
+                }
+            });
+        }
 
         const cardsContainer = document.createElement('div');
         cardsContainer.setAttribute('class', 'cards-container');
         wrapper.appendChild(cardsContainer);
-
 
         const cardData = [
             { yellowStar: false },
@@ -73,14 +78,29 @@ export class ContentMain extends HTMLElement {
 
         shadow.appendChild(style);
         shadow.appendChild(wrapper);
+    }
 
-        searchInput.addEventListener('keydown', (event: KeyboardEvent) => {
-            if (event.key === 'Enter') {
-                console.log('Enter pressionado! Valor digitado:', searchInput.value);
+    static get observedAttributes() {
+        return ['showSearchInput'];
+    }
+
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        if (name === 'showSearchInput') {
+            const wrapper = this.shadowRoot?.querySelector('.wrapper');
+            if (wrapper) {
+                if (newValue !== null && newValue !== '') {
+                    const searchInput = new SearchInput();
+                    wrapper.appendChild(searchInput);
+
+                    searchInput.addEventListener('keydown', (event: KeyboardEvent) => {
+                        if (event.key === 'Enter') {
+                            console.log('Enter pressionado! Valor digitado:', searchInput.value);
+                        }
+                    });
+                }
             }
-        });
+        }
     }
 }
 
-// Registrar o elemento personalizado
 customElements.define('app-content', ContentMain);

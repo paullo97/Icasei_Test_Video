@@ -1,37 +1,33 @@
-// src/components/drawer.ts
+import { navigateTo } from "..";
+
 export class Drawer extends HTMLElement {
     constructor() {
       super();
   
       const shadow = this.attachShadow({ mode: 'open' });
   
-      // Criar wrapper div
       const wrapper = document.createElement('div');
       wrapper.setAttribute('class', 'wrapper');
   
-      // Adicionar algum conteúdo à div
       const content = document.createElement('span');
-      content.textContent = 'MF_DRAWER';
+      content.textContent = 'Menu';
       wrapper.appendChild(content);
 
-        // Criar o botão personalizado
         const videosBtn = document.createElement('custom-button');
-        videosBtn.setAttribute('text', 'Videos'); // Definir o texto do botão
+        videosBtn.setAttribute('text', 'Videos');
         videosBtn.addEventListener('click', () => {
-            console.log('Botão clicado dentro do Drawer! 1');
+          navigateTo('/videos');
         });
         wrapper.appendChild(videosBtn);
 
-        // Criar o botão personalizado
         const favoriteBtn = document.createElement('custom-button');
-        favoriteBtn.setAttribute('text', 'Favoritos'); // Definir o texto do botão
+        favoriteBtn.setAttribute('text', 'Favoritos'); 
         favoriteBtn.setAttribute('side-content', '3');
         favoriteBtn.addEventListener('click', () => {
-            console.log('Botão clicado dentro do Drawer! 2');
+          navigateTo('/favoritos');
         });
         wrapper.appendChild(favoriteBtn);
   
-      // Criar elemento style para estilos encapsulados
       const style = document.createElement('style');
       style.textContent = `
         .wrapper {
@@ -55,12 +51,10 @@ export class Drawer extends HTMLElement {
         }
       `;
   
-      // Anexar estilos e wrapper ao shadow DOM
       shadow.appendChild(style);
       shadow.appendChild(wrapper);
     }
   }
   
-  // Registrar o elemento personalizado
   customElements.define('app-drawer', Drawer);
   

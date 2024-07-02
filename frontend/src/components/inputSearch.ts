@@ -1,5 +1,3 @@
-// src/components/search-input.ts
-
 export class SearchInput extends HTMLElement {
     private inputElement: HTMLInputElement;
 
@@ -7,12 +5,10 @@ export class SearchInput extends HTMLElement {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
 
-        // Criar input element
         this.inputElement = document.createElement('input');
         this.inputElement.type = 'text';
         this.inputElement.placeholder = 'Search...';
 
-        // Estilos para o input
         const style = document.createElement('style');
         style.textContent = `
             input {
@@ -24,16 +20,13 @@ export class SearchInput extends HTMLElement {
             }
         `;
 
-        // Anexar elementos ao shadow DOM
         shadow.appendChild(style);
         shadow.appendChild(this.inputElement);
     }
 
-    // Método getter para obter o valor do input
     get value() {
         return this.inputElement.value;
     }
 }
 
-// Registrar o componente SearchInput
 customElements.define('search-input', SearchInput);
